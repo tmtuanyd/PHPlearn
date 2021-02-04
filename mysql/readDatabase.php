@@ -1,9 +1,7 @@
 <?php include "db.php";?>
 <?php include "function.php";?>
 <?php
-if($_POST['submit']){
     updateTable();
-}
 ?>
 
 <!doctype html>
