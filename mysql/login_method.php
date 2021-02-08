@@ -4,6 +4,10 @@ if(isset($_POST["submit"])){
     $password = $_POST["password"];
     $userName = mysqli_real_escape_string($connection, $userName);
     $password = mysqli_real_escape_string($connection,$password);
+    $hashFormat = "$2y$05$";
+    $salt = "iusesomecrazystrings22";
+    $hashF_and_salt = $hashFormat . $salt;
+    $password = crypt($password, $hashF_and_salt);
     if($userName && $password){
         $query = "INSERT INTO user(username, password) ";
         $query .= "VALUES ('$userName', '$password')";
