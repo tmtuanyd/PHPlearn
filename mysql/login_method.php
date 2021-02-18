@@ -15,6 +15,7 @@ if(isset($_POST["submit"])){
         if(!$result){
             die("query failed" . mysqli_error());
         }
+        else echo ("ddddd");
     }
     else echo "this field can not be blank";
 }
