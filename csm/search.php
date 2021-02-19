@@ -18,7 +18,7 @@ include "includes/navigation.php";
         <!-- Blog Entries Column -->
         <div class="col-md-8">
             <?php
-            if(isset($_GET['submit'])) {
+            if(isset($_GET['search'])) {
                 $search = $_GET['search'];
                 $query = "SELECT * FROM posts WHERE post_tag LIKE '%$search%' ";
                 $search_query = mysqli_query($connection, $query);
