@@ -18,6 +18,9 @@
             $query = "DELETE from posts where post_id = $the_post_id";
             $delete_query = mysqli_query($connection, $query);
             confirmQuery($delete_query);
+            $query = "delete from comments where comment_post_id = $the_post_id";
+            $delete_comment = mysqli_query($connection, $query);
+            confirmQuery($delete_comment);
         }
         ?>
     </tr>
