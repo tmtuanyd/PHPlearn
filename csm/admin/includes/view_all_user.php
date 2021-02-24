@@ -2,64 +2,63 @@
     <thead>
     <tr>
         <th>Id</th>
-        <th>Author</th>
-        <th>Title</th>
-        <th>Content</th>
-        <th>Category</th>
-        <th>Status</th>
-        <th>Image</th>
-        <th>Tags</th>
-        <th>Comment</th>
-        <th>Date</th>
-        <th>Action</th>
+        <th>Avatar</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Role</th>
+
         <?php
+        if(isset($_GET['change_to_admin'])){
+            $the_user_id = $_GET['change_to_admin'];
+            $query = "UPDATE users set user_role = 'admin' where user_id=$the_user_id";
+            $change_admin_query = mysqli_query($connection, $query);
+            confirmQuery($change_admin_query);
+            header("Location: user.php");
+        }
+        if(isset($_GET['change_to_sub'])){
+            $the_user_id = $_GET['change_to_sub'];
+            $query = "UPDATE users set user_role = 'subscriber' where user_id=$the_user_id";
+            $change_sub_query = mysqli_query($connection, $query);
+            confirmQuery($change_sub_query);
+            header("Location: user.php");
+        }
         if(isset($_GET['delete'])){
-            $the_post_id = $_GET['delete'];
-            $query = "DELETE from posts where post_id = $the_post_id";
-            $delete_query = mysqli_query($connection, $query);
-            confirmQuery($delete_query);
-            $query = "delete from comments where comment_post_id = $the_post_id";
-            $delete_comment = mysqli_query($connection, $query);
-            confirmQuery($delete_comment);
+            $the_user_id = $_GET['delete'];
+            $query = "DELETE from users where user_id = $the_user_id";
+            $delete_user_query = mysqli_query($connection, $query);
+            confirmQuery($delete_user_query);
+            header("Location: user.php");
         }
         ?>
     </tr>
     <tbody>
     <?php
-    $query = "SELECT * FROM posts";
-    $select_post_admin = mysqli_query($connection, $query);
-    while($row = mysqli_fetch_assoc($select_post_admin)){
-        $post_id = $row['post_id'];
-        $post_title = $row['post_title'];
-        $post_author = $row['post_author'];
-        $post_category_id = $row['post_category_id'];
-        $post_date = $row['post_date'];
-        $post_image = $row['post_image'];
-        $post_content = $row['post_content'];
-        $post_tag = $row['post_tag'];
-        $post_status = $row['post_status'];
-        $post_comment_count = $row['post_comment_count'];
+    $query = "SELECT * FROM users";
+    $select_user_admin = mysqli_query($connection, $query);
+    while($row = mysqli_fetch_assoc($select_user_admin)){
+        $user_id = $row['user_id'];
+        $user_image = $row['user_image'];
+        $userName = $row['userName'];
+        $user_firstName= $row['user_firstName'];
+        $user_lastName= $row['user_lastName'];
+        $user_email = $row['user_email'];
+        $user_role = $row['user_role'];
 
         echo "<tr>";
-        echo "<td>$post_id</td>";
-        echo "<td>$post_author</td>";
-        echo "<td>$post_title</td>";
-        echo "<td>$post_content</td>";
-        $query = "SELECT * FROM categories WHERE cat_id = $post_category_id ";
-        $select_categories_id = mysqli_query($connection, $query);
-        while ($row = mysqli_fetch_assoc($select_categories_id)) {
-            $cat_id = $row['cat_id'];
-            $cat_title = $row['cat_title'];
-        }
-        echo "<td>$cat_title</td>";
-        echo "<td>$post_status</td>";
-        echo "<td><img width='100' src='../images/$post_image' alt='image'></td>";
-        echo "<td>$post_tag</td>";
-        echo "<td>$post_comment_count</td>";
-        echo "<td>$post_date</td>";
+        echo "<td>$user_id</td>";
+        echo "<td><img width='100' src='../images/$user_image' alt='image'></td>";
+        echo "<td>$userName</td>";
+        echo "<td>$user_firstName</td>";
+        echo "<td>$user_lastName</td>";
+        echo "<td>$user_email</td>";
+        echo "<td>$user_role</td>";
+
         echo "<td>
-                <a href='post.php?delete=$post_id'>Delete</a>
-                <a href='post.php?source=edit_post&post_id=$post_id'>Edit</a>
+                <a href='user.php?change_to_admin=$user_id'>Admin</a>
+                <a href='user.php?change_to_sub=$user_id'>Subcriber</a>
+                <a href='user.php?delete=$user_id'>Delete</a>
               </td>";
         echo "</tr>";
     }
