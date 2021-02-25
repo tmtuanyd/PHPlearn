@@ -58,6 +58,7 @@
         echo "<td>
                 <a href='user.php?change_to_admin=$user_id'>Admin</a>
                 <a href='user.php?change_to_sub=$user_id'>Subcriber</a>
+                <a href='user.php?source=edit_user&edit_user=$user_id'>Edit</a>
                 <a href='user.php?delete=$user_id'>Delete</a>
               </td>";
         echo "</tr>";
