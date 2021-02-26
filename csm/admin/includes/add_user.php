@@ -1,5 +1,5 @@
 <?php
-if(isset($_POST['edit_user'])){
+if(isset($_POST['add_user'])){
     $userName = $_POST['userName'];
     $user_password = $_POST['user_password'];
     $user_firstName = $_POST['user_firstName'];
@@ -52,7 +52,7 @@ if(isset($_POST['edit_user'])){
                 <input type="file" name="user_image">
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" name="_user" value="Add user">
+                <input type="submit" class="btn btn-primary" name="add_user" value="Add user">
             </div>
     </form>
 <?php
