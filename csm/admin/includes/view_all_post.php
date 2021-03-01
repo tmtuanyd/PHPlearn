@@ -1,6 +1,33 @@
+<?php
+if(isset($_POST['checkBoxArray'])){
+    foreach ($_POST['checkBoxArray'] as $checkBoxValue){
+        $bulk_options = $_POST['bulk_options'];
+//        switch ($bulk_options){
+//            case 'published':
+                $query = "update posts set post_status = '$bulk_options' where post_id = $checkBoxValue";
+                $update_to_published_status = mysqli_query($connection, $query);
+                confirmQuery($update_to_published_status);
+//                break;
+//        }
+    }
+}
+?>
+<form action="" method="post">
 <table class="table table-hover table-bordered">
+    <div id="bulkOptionsContainer" class="col-xs-4">
+        <select id="" class="form-control" name="bulk_options">
+            <option value="">Select Options</option>
+            <option value="published">Published</option>
+            <option value="unpublished">Unpublished</option>
+        </select>
+    </div>
+    <div class="col-xs-4">
+        <input type="submit" class="btn btn-success" value="Apply">
+        <a href="post.php?source=add_post" class="btn btn-primary">Add New</a>
+    </div>
     <thead>
     <tr>
+        <th><input type="checkbox" id="selectAllBoxes"></th>
         <th>Id</th>
         <th>Author</th>
         <th>Title</th>
@@ -41,9 +68,12 @@
         $post_comment_count = $row['post_comment_count'];
 
         echo "<tr>";
+        ?>
+        <td><input type='checkbox' class='checkBoxes' name="checkBoxArray[]" value="<?php echo $post_id ?>"></td>
+    <?php
         echo "<td>$post_id</td>";
         echo "<td>$post_author</td>";
-        echo "<td>$post_title</td>";
+        echo "<td><a href='../post.php?post_id=$post_id'>$post_title</a></td>";
         echo "<td>$post_content</td>";
         $query = "SELECT * FROM categories WHERE cat_id = $post_category_id ";
         $select_categories_id = mysqli_query($connection, $query);
@@ -67,3 +97,4 @@
     </tbody>
     </thead>
 </table>
+</form>
