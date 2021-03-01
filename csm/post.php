@@ -20,7 +20,8 @@ include "includes/navigation.php";
             <?php
             if(isset($_GET['post_id'])){
                 $the_post_id = $_GET['post_id'];
-            }
+                $view_query = "update posts set post_view_count = post_view_count + 1 where post_id = $the_post_id";
+                $send_query = mysqli_query($connection, $view_query);
             $query = "SELECT * from posts where post_id = $the_post_id";
             $select_all_post = mysqli_query($connection, $query);
             while($row = mysqli_fetch_assoc($select_all_post)){
@@ -51,7 +52,11 @@ include "includes/navigation.php";
                 <hr>
 
 
-            <?php } ?>
+            <?php }
+            } else {
+                header('Location: index.php');
+            }
+            ?>
             <!-- Blog Comments -->
             <?php
             if(isset($_POST['create_comment'])){

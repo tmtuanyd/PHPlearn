@@ -2,13 +2,13 @@
 if(isset($_POST['checkBoxArray'])){
     foreach ($_POST['checkBoxArray'] as $checkBoxValue){
         $bulk_options = $_POST['bulk_options'];
-//        switch ($bulk_options){
-//            case 'published':
+        switch ($bulk_options){
+            case 'published':
                 $query = "update posts set post_status = '$bulk_options' where post_id = $checkBoxValue";
                 $update_to_published_status = mysqli_query($connection, $query);
                 confirmQuery($update_to_published_status);
-//                break;
-//        }
+                break;
+        }
     }
 }
 ?>
@@ -38,6 +38,7 @@ if(isset($_POST['checkBoxArray'])){
         <th>Tags</th>
         <th>Comment</th>
         <th>Date</th>
+        <th>View</th>
         <th>Action</th>
         <?php
         if(isset($_GET['delete'])){
@@ -66,6 +67,7 @@ if(isset($_POST['checkBoxArray'])){
         $post_tag = $row['post_tag'];
         $post_status = $row['post_status'];
         $post_comment_count = $row['post_comment_count'];
+        $post_view_count = $row['post_view_count'];
 
         echo "<tr>";
         ?>
@@ -87,6 +89,7 @@ if(isset($_POST['checkBoxArray'])){
         echo "<td>$post_tag</td>";
         echo "<td>$post_comment_count</td>";
         echo "<td>$post_date</td>";
+        echo "<td>$post_view_count</td>";
         echo "<td>
                 <a onclick=\" javascript: return confirm('Are you sure want to delete')\" href='post.php?delete=$post_id'>Delete</a>
                 <a href='post.php?source=edit_post&post_id=$post_id'>Edit</a>
