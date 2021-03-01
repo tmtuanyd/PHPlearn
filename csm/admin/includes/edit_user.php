@@ -25,17 +25,26 @@ if(isset($_POST['create_user'])){
 
     $user_image = $_FILES['user_image']['name'];
     $user_image_temp = $_FILES['user_image']['tmp_name'];
+    $query = 'select randSalt from users';
+    $select_randsalt_query = mysqli_query($connection, $query);
+    if(!$select_randsalt_query){
+        die("Query Failed" . mysqli_error($connection));
+    }
+    $row = mysqli_fetch_array($select_randsalt_query);
+    $salt = $row['randSalt'];
+    $hashed_password = crypt($user_password, $salt);
 
 
     move_uploaded_file($user_image_temp, "../images/$user_image");
     $query = "update users set ";
     $query .= "userName = '{$userName}', ";
-    $query .= "user_password = '{$user_password}', ";
+    $query .= "user_password = '{$hashed_password}', ";
     $query .= "user_firstName = '{$user_firstName}', ";
     $query .= "user_lastName = '{$user_lastName}', ";
     $query .= "user_email = '{$user_email}', ";
     $query .= "user_role = '{$user_role}' ";
     $query .= "where user_id = $the_user_id";
+
 
 
     $update_user_query = mysqli_query($connection, $query);

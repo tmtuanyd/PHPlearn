@@ -23,6 +23,7 @@
                 }
                 ?>
                 <li><a href="admin">admin</a></li>
+                <li><a href="registration.php">Registration</a></li>
                 <?php
                 if(isset($_SESSION['role'])){
                     if(isset($_GET['post_id']) && $_SESSION['role']='admin'){
